@@ -90,7 +90,7 @@ namespace Lab1
             {
                 for (int j = 0; j < size; j++)
                 {
-                    matrix[i, j] = Convert.ToDouble(dataGridView1[i, j].Value);
+                    matrix[i, j] = Convert.ToDouble(dataGridView1[j, i].Value);
                 }
             }
             return matrix;
