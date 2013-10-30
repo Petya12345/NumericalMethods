@@ -36,7 +36,10 @@
             this.solveButton = new System.Windows.Forms.Button();
             this.condButton = new System.Windows.Forms.Button();
             this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -113,11 +116,30 @@
             this.maskedTextBox1.Size = new System.Drawing.Size(34, 20);
             this.maskedTextBox1.TabIndex = 8;
             // 
+            // dataGridView2
+            // 
+            this.dataGridView2.AllowUserToAddRows = false;
+            this.dataGridView2.AllowUserToDeleteRows = false;
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1});
+            this.dataGridView2.Location = new System.Drawing.Point(538, 36);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(88, 334);
+            this.dataGridView2.TabIndex = 9;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "0";
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 20;
+            // 
             // InputForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(545, 382);
+            this.ClientSize = new System.Drawing.Size(638, 382);
+            this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.maskedTextBox1);
             this.Controls.Add(this.condButton);
             this.Controls.Add(this.solveButton);
@@ -130,6 +152,7 @@
             this.Text = "Lab1";
             this.Load += new System.EventHandler(this.InputForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -145,6 +168,8 @@
         private System.Windows.Forms.Button solveButton;
         private System.Windows.Forms.Button condButton;
         private System.Windows.Forms.MaskedTextBox maskedTextBox1;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
     }
 }
 

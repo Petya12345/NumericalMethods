@@ -7,7 +7,7 @@ namespace Lab1.Algorithms
 {
     class Reference : IMatrixSolutionAlgorithm
     {
-        public double[] Solve(double[,] A, double[] B)
+        public double[] Solve(double[,] A, double[] B, ref double epsilon)
         {
             double[] tmp = new double[B.Length]; //algorithm below returns data to Y array, so we create temporary variable to hold the results
             Array.Copy(B, tmp, B.Length);

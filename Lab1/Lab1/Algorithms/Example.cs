@@ -9,7 +9,7 @@ namespace Lab1.Algorithms
     //please feel free to copy it
     class Example : IMatrixSolutionAlgorithm
     {
-        public double[] Solve(double[,] A, double[] B)
+        public double[] Solve(double[,] A, double[] B, ref double epsilon)
         {
             //this is how to access A elements
             var a11 = A[0, 0]; //in c# array index starts with 0!

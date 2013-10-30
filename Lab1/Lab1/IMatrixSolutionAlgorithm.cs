@@ -7,6 +7,6 @@ namespace Lab1
 {
     public interface IMatrixSolutionAlgorithm
     {
-        double[] Solve(double[,] A, double[] B);
+        double[] Solve(double[,] A, double[] B, ref double epsilon);
     }
 }

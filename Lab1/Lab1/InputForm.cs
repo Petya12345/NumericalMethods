@@ -45,9 +45,17 @@ namespace Lab1
                         HeaderText = i.ToString(),
                         Width = 20
                     });
-                    dataGridView1.Rows.Add();
 
+
+                    dataGridView1.Rows.Add();
                 }
+
+                dataGridView2.Rows.Clear();
+                for (int i = 0; i < size; i++)
+                {
+                    dataGridView2.Rows.Add();
+                }
+
             }
             catch (Exception ex)
             {
@@ -55,17 +63,42 @@ namespace Lab1
             }
         }
 
-        private double[] solveUsingSelectedAlgorithm()
+        private double[] solveUsingSelectedAlgorithm(double[,] A, double[] B)
         {
             var algorithmName = algorithmComboBox.SelectedItem.ToString();
             var algorithmClassType = Assembly.GetExecutingAssembly().GetTypes().First(t => t.Name == algorithmName);
             IMatrixSolutionAlgorithm algorithmClass = Activator.CreateInstance(algorithmClassType) as IMatrixSolutionAlgorithm;
-            return algorithmClass.Solve(null, null); //TODO: read gridviews
+            double epsilon = 0;  //todo: add epsilon
+            return algorithmClass.Solve(A, B, ref epsilon);
+        }
+
+        private double[] getBVector()
+        {
+            var vector = new double[dataGridView2.Rows.Count];
+            for (int i = 0; i < dataGridView2.Rows.Count; i++)
+            {
+                vector[i] = Convert.ToDouble(dataGridView2[0, i].Value);
+            }
+            return vector;
+        }
+
+        private double[,] getAMatrix()
+        {
+            var size = dataGridView1.Rows.Count;
+            var matrix = new double[size, size];
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    matrix[i, j] = Convert.ToDouble(dataGridView1[i, j].Value);
+                }
+            }
+            return matrix;
         }
 
         private void solveButton_Click(object sender, EventArgs e)
         {
-            var result = solveUsingSelectedAlgorithm();
+            var result = solveUsingSelectedAlgorithm(getAMatrix(), getBVector());
             var sb = new StringBuilder();
             foreach (var resultItem in result)
             {
