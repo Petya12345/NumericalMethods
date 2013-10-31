@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Algorithms\Example.cs" />
     <Compile Include="Algorithms\Reference.cs" />
+    <Compile Include="Algorithms\Relax.cs" />
     <Compile Include="InputForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -63,12 +63,11 @@ namespace Lab1
             }
         }
 
-        private double[] solveUsingSelectedAlgorithm(double[,] A, double[] B)
+        private double[] solveUsingSelectedAlgorithm(double[,] A, double[] B, ref double epsilon)
         {
             var algorithmName = algorithmComboBox.SelectedItem.ToString();
             var algorithmClassType = Assembly.GetExecutingAssembly().GetTypes().First(t => t.Name == algorithmName);
             IMatrixSolutionAlgorithm algorithmClass = Activator.CreateInstance(algorithmClassType) as IMatrixSolutionAlgorithm;
-            double epsilon = 0;  //todo: add epsilon
             return algorithmClass.Solve(A, B, ref epsilon);
         }
 
@@ -98,13 +97,17 @@ namespace Lab1
 
         private void solveButton_Click(object sender, EventArgs e)
         {
-            var result = solveUsingSelectedAlgorithm(getAMatrix(), getBVector());
+            var epsilon = double.Parse(epsilonTextBox.Text);
+            var result = solveUsingSelectedAlgorithm(getAMatrix(), getBVector(), ref epsilon);
             var sb = new StringBuilder();
             foreach (var resultItem in result)
             {
                 sb.AppendLine(resultItem.ToString());
             }
-
+            if (epsilon > 1)
+            {
+                sb.AppendFormat("Number Of Iterations: {0}", (int)epsilon);
+            }
             MessageBox.Show(sb.ToString());
         }
     }
