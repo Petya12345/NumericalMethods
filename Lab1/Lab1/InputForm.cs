@@ -116,14 +116,20 @@ namespace Lab1
             double[] B = getBVector(); //B
             double[] dB = new double[B.Length];
             double epsilon = 0.0001;
-            double[] X = solveUsingSelectedAlgorithm(getAMatrix(), getBVector(), ref epsilon); //X
+            double[] X = solveUsingSelectedAlgorithm(getAMatrix(), B, ref epsilon); //X
 
             for (int i = 0; i < B.Length; i++) 
             {
                 dB[i] = B[i] * 1.01; //dB
             }
 
-            double[] dX = solveUsingSelectedAlgorithm(getAMatrix(), dB, ref epsilon); //dX
+            epsilon = 0.0001;
+            double[] newX = solveUsingSelectedAlgorithm(getAMatrix(), dB, ref epsilon); 
+            double[] dX = new double[newX.Length];
+            for (int i = 0; i < newX.Length; i++ )
+            {
+                dX[i] = newX[i] - X[i];
+            }
             double dXNorm, XNorm, dBNorm, BNorm;
 
             XNorm = norm(X);
