@@ -17,7 +17,7 @@ namespace Lab1.Algorithms
 
 
         //AG: this thing I got from the internet http://social.msdn.microsoft.com/Forums/en-US/70408584-668d-49a0-b179-fabf101e71e9/solution-of-linear-equations-systems
-        private void computeCoefficents(double[,] X, double[] Y)
+        private void computeCoefficents2(double[,] X, double[] Y)
         {
             //Use Guassian Elimination.  I've got source code on these forums somwhere.
             //This function takes an N X N matrix in the X variable and a 1 X N vector in the Y variable.  The coefficients are returned in the Y variable.
@@ -55,6 +55,51 @@ namespace Lab1.Algorithms
                 {
                     Y[I] -= X[I, J] * Y[J];
                 }
+            }
+        }
+
+        private void computeCoefficents(double[,] X, double[] Y)
+        {
+            int n = Y.Length, exchangeI;
+            double max, swap, quotient;
+
+            for (int k = 0; k < n-1; k++ )
+            {
+                //choosing of leading element
+                max = X[k, k];
+                exchangeI = k;
+                for (int i = k+1; i < n; i++ )
+                {
+                    if (X[i, k] > max)
+                    {
+                        max = X[i, k];
+                        exchangeI = i;
+                    }
+                }
+
+                //exchange k and i rows
+                if (k != exchangeI)
+                {
+                    for (int j = k; j < n; j++ )
+                    {
+                        swap = X[k, j];
+                        X[k, j] = X[exchangeI, j];
+                        X[exchangeI, j] = swap;
+
+                    }
+                }
+
+                //calculations from gauss method, part 1
+                for (int i = k+1; i < n; i++) 
+                {
+                   quotient = X[i, k] / X[k, k] * (-1);
+                   for (int j = k; j < n; j++ )
+                   {
+                       X[k, j] = X[k, j] * quotient + X[i, j];
+                   }
+                }
+
+                //calculations from gauss method, part 2
             }
         }
     }
