@@ -130,12 +130,19 @@ namespace Lab1
             {
                 dX[i] = newX[i] - X[i];
             }
+
+            double[] deltaB = new double[dB.Length];
+            for (int i = 0; i < dB.Length; i++)
+            {
+                deltaB[i] = dB[i] - B[i];
+            }
+
             double dXNorm, XNorm, dBNorm, BNorm;
 
             XNorm = norm(X);
             dXNorm = norm(dX);
             BNorm = norm(B);
-            dBNorm = norm(dB);
+            dBNorm = norm(deltaB);
 
             double condA = (dXNorm / XNorm) / (dBNorm / BNorm);
 
