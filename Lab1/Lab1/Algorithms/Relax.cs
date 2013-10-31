@@ -10,18 +10,23 @@ namespace Lab1.Algorithms
         public double[] Solve(double[,] A, double[] B, ref double epsilon)
         {
             var omega = 1; //relaxation 
+            var numOfIterations = 0;
             int n = B.Length;
             var x = new double[n];
             var xPrev = new double[n];
             do
             {
+                numOfIterations++;
                 Array.Copy(x, xPrev, n);
                 for (int i = 0; i < n; i++)
                 {
                     double sum = 0;
-                    for (int j = 0; j < n && j != i; j++)
+                    for (int j = 0; j < n; j++)
                     {
-                        sum += A[i, j] * x[j];
+                        if (j != i)
+                        {
+                            sum += A[i, j] * x[j];
+                        }
                     }
 
                     var xZeidel = (B[i] - sum) / A[i, i];
@@ -29,6 +34,7 @@ namespace Lab1.Algorithms
                 }
             }
             while (!isFinished(x, xPrev, epsilon));
+            epsilon = (double)numOfIterations;
             return x;
         }
 
