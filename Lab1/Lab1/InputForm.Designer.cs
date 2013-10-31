@@ -109,6 +109,7 @@
             this.condButton.TabIndex = 7;
             this.condButton.Text = "Calculate Cond(A)";
             this.condButton.UseVisualStyleBackColor = true;
+            this.condButton.Click += new System.EventHandler(this.condButton_Click);
             // 
             // maskedTextBox1
             // 

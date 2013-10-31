@@ -110,5 +110,40 @@ namespace Lab1
             }
             MessageBox.Show(sb.ToString());
         }
+
+        private void condButton_Click(object sender, EventArgs e)
+        {
+            double[] B = getBVector(); //B
+            double[] dB = new double[B.Length];
+            double epsilon = 0.0001;
+            double[] X = solveUsingSelectedAlgorithm(getAMatrix(), getBVector(), ref epsilon); //X
+
+            for (int i = 0; i < B.Length; i++) 
+            {
+                dB[i] = B[i] * 1.01; //dB
+            }
+
+            double[] dX = solveUsingSelectedAlgorithm(getAMatrix(), dB, ref epsilon); //dX
+            double dXNorm, XNorm, dBNorm, BNorm;
+
+            XNorm = norm(X);
+            dXNorm = norm(dX);
+            BNorm = norm(B);
+            dBNorm = norm(dB);
+
+            double condA = (dXNorm / XNorm) / (dBNorm / BNorm);
+
+            MessageBox.Show(condA.ToString());
+        }
+
+        private double norm(double[] vector)
+        {
+            double sum = 0;
+            for (int i = 0; i < vector.Length; i++) 
+            {
+                sum += vector[i] * vector[i];
+            }
+            return Math.Sqrt(sum);
+        }
     }
 }
