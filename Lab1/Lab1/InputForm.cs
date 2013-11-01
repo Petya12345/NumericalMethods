@@ -118,10 +118,10 @@ namespace Lab1
             double epsilon = 0.0001;
             double[] X = solveUsingSelectedAlgorithm(getAMatrix(), B, ref epsilon); //X
 
-            for (int i = 0; i < B.Length; i++) 
-            {
-                dB[i] = B[i] * 1.01; //dB
-            }
+            Array.Copy(B, dB, B.Length);
+            var max = dB.Max();
+            var maxIndex = Array.IndexOf(dB, max);
+            dB[maxIndex] = dB[maxIndex] * 1.01;
 
             epsilon = 0.0001;
             double[] newX = solveUsingSelectedAlgorithm(getAMatrix(), dB, ref epsilon); 
@@ -154,9 +154,10 @@ namespace Lab1
             double sum = 0;
             for (int i = 0; i < vector.Length; i++) 
             {
-                sum += vector[i] * vector[i];
+                sum += Math.Abs(vector[i]); //vector[i] * vector[i];
             }
-            return Math.Sqrt(sum);
+           // return Math.Sqrt(sum);
+            return sum;
         }
     }
 }
