@@ -15,62 +15,44 @@ namespace Lab1.Algorithms
             return tmp;
         }
 
+
         private void computeCoefficents(double[,] X, double[] Y)
         {
-            int n = Y.Length, exchangeI;
-            double max, swap, quotient;
-
-            for (int k = 0; k < n-1; k++ )
+            int I, J, K, K1, N;
+            N = Y.Length;
+            for (K = 0; K < N; K++)
             {
-                //choosing of leading element
-                max = X[k, k];
-                exchangeI = k;
-                for (int i = k+1; i < n; i++ )
+                K1 = K + 1;
+                for (I = K; I < N; I++)
                 {
-                    if (X[i, k] > max)
+                    if (X[I, K] != 0)
                     {
-                        max = X[i, k];
-                        exchangeI = i;
+                        for (J = K1; J < N; J++)
+                        {
+                            X[I, J] /= X[I, K];
+                        }
+                        Y[I] /= X[I, K];
                     }
                 }
-
-                //exchange k and i rows
-                if (k != exchangeI)
+                for (I = K1; I < N; I++)
                 {
-                    for (int j = k; j < n; j++ )
+                    if (X[I, K] != 0)
                     {
-                        swap = X[k, j];
-                        X[k, j] = X[exchangeI, j];
-                        X[exchangeI, j] = swap;
-
+                        for (J = K1; J < N; J++)
+                        {
+                            X[I, J] -= X[K, J];
+                        }
+                        Y[I] -= Y[K];
                     }
                 }
-
-                //calculations from gauss method, part 1
-                for (int i = k+1; i < n; i++) 
-                {
-                   quotient = X[i, k] / X[k, k] * (-1);
-                   for (int j = k; j < n; j++ )
-                   {
-                       X[i, j] = X[k, j] * quotient + X[i, j];
-                   }
-                   Y[i] = Y[k] * quotient + Y[i];
-                }
-
-                //calculations from gauss method, part 2
             }
-            Y[n-1] = Y[n-1] / X[n-1, n-1];
-            double sum;
-            for (int k = n-2; k >= 0; k-- )
+            for (I = N - 2; I >= 0; I--)
             {
-                sum = 0;
-                for (int i = 1; i < n - k; i++) 
+                for (J = N - 1; J >= I + 1; J--)
                 {
-                    sum += X[k, n - i] * Y[n - i];
+                    Y[I] -= X[I, J] * Y[J];
                 }
-                Y [k] = (Y[k] - sum) / X[k, k];
             }
         }
     }
 }
-

@@ -13,6 +13,11 @@ namespace Lab1.Algorithms
             var numOfIterations = 0;
             int n = B.Length;
             var x = new double[n];
+            //for (int i = 0; i < x.Length; i++ )
+            //{
+            //    x[i] = i * 55;
+            //}
+
             var xPrev = new double[n];
             do
             {
