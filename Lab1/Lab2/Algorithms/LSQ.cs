@@ -9,6 +9,7 @@ namespace Lab2.Algorithms
     {
         public double[] Solve(double[] X, double[] Y)
         {
+            Console.WriteLine("LSQ Polinomial Method");
             //step 1: create matrix, let Z - matrix coefficients
             var k = X.Length; //???
 
@@ -35,7 +36,8 @@ namespace Lab2.Algorithms
                 }
                 zY[i] = sY;
             }
-
+            Helpers.PrintMatrix("A", z);
+            Helpers.printVector("B", zY);
             //step 2: solve matrix
             computeCoefficents(z, zY);
             return zY;

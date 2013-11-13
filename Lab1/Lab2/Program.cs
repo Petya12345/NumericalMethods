@@ -17,10 +17,7 @@ namespace Lab2
             var y2 = new double[] { 2, 3, 6 };
 
             var result = lsq.Solve(x2, y2);
-            foreach (var el in result)
-            {
-                Console.WriteLine(el);
-            }
+            Helpers.printVector("LSQ Result", result);
             Console.ReadKey();
 
         }
