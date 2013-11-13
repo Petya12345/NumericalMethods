@@ -98,7 +98,9 @@ namespace Lab1
         private void solveButton_Click(object sender, EventArgs e)
         {
             var epsilon = double.Parse(epsilonTextBox.Text);
+            var start = DateTime.Now;
             var result = solveUsingSelectedAlgorithm(getAMatrix(), getBVector(), ref epsilon);
+            var end = DateTime.Now;
             var sb = new StringBuilder();
             foreach (var resultItem in result)
             {
@@ -106,8 +108,9 @@ namespace Lab1
             }
             if (epsilon > 1)
             {
-                sb.AppendFormat("Number Of Iterations: {0}", (int)epsilon);
+                sb.AppendFormat("Number Of Iterations: {0}\r\n", (int)epsilon);
             }
+            //sb.AppendFormat("Time taken: {0}ms", (end - start).TotalMilliseconds.ToString("N3"));
             MessageBox.Show(sb.ToString());
         }
 
@@ -118,15 +121,15 @@ namespace Lab1
             double epsilon = 0.0001;
             double[] X = solveUsingSelectedAlgorithm(getAMatrix(), B, ref epsilon); //X
 
-            for (int i = 0; i < B.Length; i++) 
-            {
-                dB[i] = B[i] * 1.01; //dB
-            }
+            Array.Copy(B, dB, B.Length);
+            var max = dB.Max();
+            var maxIndex = Array.IndexOf(dB, max);
+            dB[maxIndex] = dB[maxIndex] * 1.01;
 
             epsilon = 0.0001;
-            double[] newX = solveUsingSelectedAlgorithm(getAMatrix(), dB, ref epsilon); 
+            double[] newX = solveUsingSelectedAlgorithm(getAMatrix(), dB, ref epsilon);
             double[] dX = new double[newX.Length];
-            for (int i = 0; i < newX.Length; i++ )
+            for (int i = 0; i < newX.Length; i++)
             {
                 dX[i] = newX[i] - X[i];
             }
@@ -152,11 +155,35 @@ namespace Lab1
         private double norm(double[] vector)
         {
             double sum = 0;
-            for (int i = 0; i < vector.Length; i++) 
+            for (int i = 0; i < vector.Length; i++)
             {
-                sum += vector[i] * vector[i];
+                sum += Math.Abs(vector[i]); //vector[i] * vector[i];
             }
-            return Math.Sqrt(sum);
+            // return Math.Sqrt(sum);
+            return sum;
+        }
+
+        private void timeBtn_Click(object sender, EventArgs e)
+        {
+            var epsilon = double.Parse(epsilonTextBox.Text);
+            var start = DateTime.Now;
+            var result = solveUsingSelectedAlgorithm(getAMatrix(), getBVector(), ref epsilon);
+            for (int i = 0; i < 999; i++)
+            {
+                solveUsingSelectedAlgorithm(getAMatrix(), getBVector(), ref epsilon);
+            }
+            var end = DateTime.Now;
+            var sb = new StringBuilder();
+            foreach (var resultItem in result)
+            {
+                sb.AppendLine(resultItem.ToString());
+            }
+            if (epsilon > 1)
+            {
+                sb.AppendFormat("Number Of Iterations: {0}\r\n", (int)epsilon);
+            }
+            sb.AppendFormat("Time taken: {0}ms", (end - start).TotalMilliseconds.ToString("N3"));
+            MessageBox.Show(sb.ToString());
         }
     }
 }
