@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\CubicSpline.cs" />
+    <Compile Include="Algorithms\Gauss.cs" />
     <Compile Include="Algorithms\LSQ.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Program.cs" />

@@ -10,6 +10,7 @@ namespace Lab2
         static void Main(string[] args)
         {
             var lsq = new Algorithms.LSQ();
+            var cubicSpline = new Algorithms.CubicSpline();
             var x = new double[] { 0, 3.3, 6.6, 9.9 };
             var y = new double[] { 2.1, 5.9, 2.4, 3.4 };
 
@@ -17,7 +18,12 @@ namespace Lab2
             var y2 = new double[] { 2, 3, 6 };
 
             var result = lsq.Solve(x2, y2);
-            Helpers.printVector("LSQ Result", result);
+            Helpers.PrintVector("LSQ Result", result);
+
+            var spline = cubicSpline.Solve(x2, y2);
+            Helpers.PrintMatrix("CubicSpline Result", spline);
+
+
             Console.ReadKey();
 
         }

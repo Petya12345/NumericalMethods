@@ -21,7 +21,7 @@ namespace Lab2
             Console.WriteLine();
         }
 
-        public static void printVector(string name, double[] vector)
+        public static void PrintVector(string name, double[] vector)
         {
             Console.WriteLine("===VECTOR {0}===", name);
             for (int i = 0; i < vector.Length; i++)
