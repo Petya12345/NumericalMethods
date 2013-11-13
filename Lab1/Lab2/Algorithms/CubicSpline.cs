@@ -44,22 +44,18 @@ namespace Lab2.Algorithms
             Helpers.PrintVector("B", B);
             //todo: change to thompson method
             Gauss.computeCoefficents(A, B);
-            for (int i = 0; i < k; i++)
+            for (int i = 1; i < k; i++)
             {
-                if (i > 0)
-                {
-                    result[i, 2] = B[i - 1]; //c
-                }
+                result[i, 2] = B[i - 1]; //c
+            }
+            for (int i = 0; i < k - 1; i++)
+            {
                 var c = result[i, 2];
 
-                if (i + 1 < k)
-                {
-                    //calculate b
-                    result[i, 1] = (Y[i + 1] - Y[i] - c * h[i] * h[i] - ((result[i + 1, 2] - c) / 3) * h[i] * h[i]) / h[i];
-                    //calculate d
-                    result[i,3] = (result[i + 1, 2] - c) / (3 * h[i]);
-                }
-
+                //calculate b
+                result[i, 1] = (Y[i + 1] - Y[i] - c * h[i] * h[i] - ((result[i + 1, 2] - c) / 3) * h[i] * h[i]) / h[i];
+                //calculate d
+                result[i, 3] = (result[i + 1, 2] - c) / (3 * h[i]);
             }
             return result;
         }
