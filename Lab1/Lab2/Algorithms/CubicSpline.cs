@@ -57,6 +57,11 @@ namespace Lab2.Algorithms
                 //calculate d
                 result[i, 3] = (result[i + 1, 2] - c) / (3 * h[i]);
             }
+            //for last row we calculate b and d from last equation 2cn + 6dnhn = 0
+            //dn = -2cn/6hn
+            result[k - 1, 3] = -result[k - 1, 2] / 6 * h[k - 1];
+            //bn - calculate using dn
+            result[k - 1, 1] = (Y[k] - Y[k - 1] - result[k - 1, 2] * h[k - 1] * h[k - 1] - result[k - 1, 3] * h[k - 1] * h[k - 1] * h[k - 1]) / h[k - 1];
             return result;
         }
     }
