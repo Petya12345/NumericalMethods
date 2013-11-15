@@ -42,8 +42,14 @@ namespace Lab2.Algorithms
             }
             Helpers.PrintMatrix("A", A);
             Helpers.PrintVector("B", B);
-            //todo: change to thompson method
-            Gauss.computeCoefficents(A, B);
+            if (B.Length > 2)
+            {
+                B = Thompson.Solve(A, B);
+            }
+            else
+            {
+                Gauss.computeCoefficents(A, B);
+            }
             for (int i = 1; i < k; i++)
             {
                 result[i, 2] = B[i - 1]; //c
