@@ -7,10 +7,20 @@ namespace Lab3.Algorithms
 {
     class Bisection
     {
-        public double FindRoot(double xl, double xu)
+        public double FindRoot(double xl, double xu, double e, Func<double, double> function)
         {
+            double xr = (xl + xu) / 2;
 
-            return 0;
+            if (function(xl) * function(xr) < 0) xu = xr;
+            else xl = xr;
+
+            if ((xu - xl) <= e) return xr;
+            else return FindRoot(xl, xu, e, function);
+        }
+
+        public double f(double x)
+        {
+            return -3 * x + 5;
         }
     }
 }

@@ -12,7 +12,12 @@ namespace Lab3
 
             var bisection = new Algorithms.Bisection();
             double xl = 0, xu = 20;
-            bisection.FindRoot(xl, xu);
+
+            //double root = bisection.FindRoot(xl, xu, e);
+
+
+            Console.WriteLine("X = {0}", root);
+            Console.Read();
         }
     }
 }
