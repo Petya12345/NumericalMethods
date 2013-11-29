@@ -12,7 +12,7 @@ namespace Lab3.Algorithms
             var bisectA = a;
             var bisectB = b;
             var bisectionresult = new Bisection().FindRoot(ref bisectA, ref bisectB, eps1, function);
-            Console.WriteLine("Interval after bisection: [{0};{1}]", a, b);
+            Console.WriteLine("Interval after bisection: [{0};{1}]", bisectA, bisectB);
             double xPrev = (bisectA + bisectB) / 2;
             Console.Write("{0} ", xPrev);
             double x = 0;
@@ -27,7 +27,7 @@ namespace Lab3.Algorithms
                 }
                 xPrev = x;
             }
-            Console.WriteLine("Finished in {0} iterations", i);
+            Console.WriteLine("Finished in {0} iterations", i + 1);
             return x;
         }
     }
