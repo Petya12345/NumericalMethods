@@ -9,7 +9,7 @@ namespace Lab3.Algorithms
     {
         public double FindRoot(Func<double, double> function, Func<double, double> derivative, double a, double b, double eps1, double eps2)
         {
-            var 
+            //var 
             return 0;
         }
     }
