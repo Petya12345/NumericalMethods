@@ -14,7 +14,7 @@ namespace Lab2
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    Console.Write("{0}\t", matrix[i, j]);
+                    Console.Write("{0:0.00}\t", matrix[i, j]);
                 }
                 Console.WriteLine();
             }
@@ -26,7 +26,7 @@ namespace Lab2
             Console.WriteLine("===VECTOR {0}===", name);
             for (int i = 0; i < vector.Length; i++)
             {
-                Console.Write("{0}\t", vector[i]);
+                Console.Write("{0:0.00}\t", vector[i]);
             }
             Console.WriteLine();
         }

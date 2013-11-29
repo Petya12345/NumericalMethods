@@ -44,7 +44,9 @@ namespace Lab2.Algorithms
             Helpers.PrintVector("B", B);
             if (B.Length > 2)
             {
-                B = Thompson.Solve(A, B);
+                //B = Thompson.Solve(A, B);
+
+                Gauss.computeCoefficents(A, B);
             }
             else
             {

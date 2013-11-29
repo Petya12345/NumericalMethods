@@ -9,9 +9,10 @@ namespace Lab2.Algorithms
     {
         public double[] Solve(double[] X, double[] Y)
         {
-            Console.WriteLine("LSQ Polinomial Method");
             //step 1: create matrix, let Z - matrix coefficients
             var k = X.Length; //???
+
+            Console.WriteLine("LSQ Polinomial Method with order {0}", k);
 
             //x for matrix
             var z = new double[k, k];
