@@ -13,7 +13,7 @@ namespace Lab3
             var bisection = new Algorithms.Bisection();
             double xl = 0, xu = 20;
 
-            //double root = bisection.FindRoot(xl, xu, e);
+            double root = bisection.FindRoot(xl, xu, 0.1, x=>Math.Sin(x));
 
 
             Console.WriteLine("X = {0}", root);
