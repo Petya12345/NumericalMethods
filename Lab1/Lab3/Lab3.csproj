@@ -6,6 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9B85F769-7A17-4B61-9301-BEF3AE224D83}</ProjectGuid>
+    <ProjectGuid>{7AC37425-F3FF-42D4-8219-4685C4855583}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Lab3</RootNamespace>
@@ -44,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\Bisection.cs" />
+    <Compile Include="NewtonsCombined.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
