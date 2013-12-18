@@ -7,11 +7,11 @@ namespace Lab3.Algorithms
 {
     class NewtonsCombined
     {
-        public double FindRoot(Func<double, double> function, Func<double, double> derivative, double a, double b, double eps1, double eps2)
+        public double FindRoot(Func<double, double> function, Func<double, double> derivative, double a, double b, double eps1, double eps2, ref int numOfIterations)
         {
             var bisectA = a;
             var bisectB = b;
-            var bisectionresult = new Bisection().FindRoot(ref bisectA, ref bisectB, eps1, function);
+            var bisectionresult = new Bisection().FindRoot(ref bisectA, ref bisectB, eps1, function, ref numOfIterations);
             Console.WriteLine("Interval after bisection: [{0};{1}]", bisectA, bisectB);
             double xPrev = (bisectA + bisectB) / 2;
             Console.Write("{0} ", xPrev);
@@ -27,6 +27,7 @@ namespace Lab3.Algorithms
                 }
                 xPrev = x;
             }
+            numOfIterations += i + 1;
             Console.WriteLine("Finished in {0} iterations", i + 1);
             return x;
         }
