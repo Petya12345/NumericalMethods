@@ -8,27 +8,55 @@ namespace Laboratornaja4
 {
     class Program
     {
-        
-        static void Main(string[] args) {
-		    float right = 10;
-		    PointF leftmost = new PointF(0,1);
-		    float epsilon = (float)0.001;
-		
-		    List<PointF> f1 = analytical(leftmost.X, right, (float)0.1);
-            List<PointF> f2 = analytical(leftmost.X, right, (float)0.01);
-		
-		    List<PointF> g1 = gear(leftmost, right, (float)0.1, epsilon);
+
+        public static float function(float x)
+        {
+            return (float)(0.25 * x - 0.05 * x * x);
+        }
+
+        public static float analyticalFunction(float t)
+        {
+            return (float)(0.5 * 0.25 * (float)Math.Pow(Math.E, 0.25 * t) / (0.25 + 0.05 * 0.5 * ((float)Math.Pow(Math.E, 0.25 * t) - 1)));
+        }
+
+        static void Main(string[] args)
+        {
+            float right = 40;
+            PointF leftmost = new PointF(0, 0.5F);
+            float epsilon = (float)0.001;
+            float[] t = { 0, 40 };
+
+            List<PointF> a1 = analytical(leftmost.X, right, (float)0.1);
+            print("A1", a1);
+            List<PointF> a2 = analytical(leftmost.X, right, (float)0.01);
+            print("A2", a2);
+
+            List<PointF> e1 = euler(leftmost, t, (float)0.1);
+            print("E1", e1);
+            List<PointF> e2 = euler(leftmost, t, (float)0.01);
+            print("E2", e2);
+
+            List<PointF> g1 = gear(leftmost, right, (float)0.1, epsilon);
+            print("G1", g1);
             List<PointF> g2 = gear(leftmost, right, (float)0.01, epsilon);
-		
-		    float firstDiff = maxDiff(f1, g1);
-		    float secondDiff = maxDiff(f2, g2);
-		
-		
-		    Console.WriteLine("diff with h=0.1 and epsilon=" + epsilon + ": " + firstDiff);
-            Console.WriteLine("diff with h=0.01 and epsilon=" + epsilon + ": " + secondDiff);
+            print("G2", g2);
+
+            printDiff("ErrE1", a1, e1);
+            printDiff("ErrE2", a2, e2);
+            printDiff("ErrG1", a1, g1);
+            printDiff("ErrG2", a2, g2);
+
+            float firstDiff = maxDiff(a1, e1);
+            float secondDiff = maxDiff(a2, e2);
+            Console.WriteLine("Euler: diff with h=0.1 and epsilon=" + epsilon + ": " + firstDiff.ToString("0.00000000000000"));
+            Console.WriteLine("Euler: diff with h=0.01 and epsilon=" + epsilon + ": " + secondDiff.ToString("0.00000000000000"));
+            firstDiff = maxDiff(a1, g1);
+            secondDiff = maxDiff(a2, g2);
+            Console.WriteLine("Gears: diff with h=0.1 and epsilon=" + epsilon + ": " + firstDiff.ToString("0.00000000000000"));
+            Console.WriteLine("Gears: diff with h=0.01 and epsilon=" + epsilon + ": " + secondDiff.ToString("0.00000000000000"));
 
             Console.ReadKey();
-	    }
+        }
 
         public static List<PointF> gear(PointF leftmost, float right, float h, float epsilon)
         {
@@ -37,20 +65,21 @@ namespace Laboratornaja4
             float current;
             float next;
             float correctedNext;
+            result.Add(leftmost); //x(0)
             float x = leftmost.X + h;
             previous = leftmost.Y;
-            current = euler(previous, h);
+            current = previous + h * function(previous);
 
             result.Add(new PointF(x, current));
             x += h;
 
-            while (x < right)
+            while (x <= right)
             {
-                correctedNext = prognose(current, h);
+                correctedNext = current + h * function(current);
                 do
                 {
                     next = correctedNext;
-                    correctedNext = correct(previous, current, next, h);
+                    correctedNext = (float)(4 / 3d * current - 1 / 3d * previous + 2 / 3d * h * function(next));
                 } while (Math.Abs(correctedNext - next) > epsilon);
                 next = correctedNext;
 
@@ -65,36 +94,17 @@ namespace Laboratornaja4
             return result;
         }
 
-        public static float prognose(float current, float h)
-        {
-            return euler(current, h);
-        }
-
-        public static float correct(float previous, float current, float next, float h)
-        {
-            return 0;
-            //return 4 / 3d * current - 1 / 3d * previous + 2 / 3d * h * function(next);
-        }
-
-
 
         public static List<PointF> analytical(float left, float right, float h)
         {
             List<PointF> ty = new List<PointF>();
-            float x = left + h;
-            while (x < right)
+            float x = left;
+            while (x <= right)
             {
                 ty.Add(new PointF(x, analyticalFunction(x)));
                 x += h;
             }
-
             return ty;
-        }
-
-        public static float euler(float current, float h)
-        {
-            float next = current + h * function(current);
-            return next;
         }
 
         public static List<PointF> diff(List<PointF> f1, List<PointF> f2)
@@ -109,101 +119,29 @@ namespace Laboratornaja4
             return diff;
         }
 
-        public static float maxDiff(List<PointF> f1, List<PointF> f2) {
-		List<PointF> deltas = diff(f1, f2);
-		float delta = 0;
-		foreach(PointF p in deltas) {
-			if(Math.Abs(p.Y) >= Math.Abs(delta))
-				delta = Math.Abs(p.Y);
-		}
-		return delta;
-	}
-
-
-
-
-    public static float function(float x)
-    {
-        return (float)(0.25 * x - 0.05 * x * x);
-    }
-
-    public static float analyticalFunction(float t)
-    {
-        return (float)(0.5 * 0.25 * (float)Math.Pow(Math.E, 0.25 * t) / (0.25 + 0.05 * 0.5 * ((float)Math.Pow(Math.E, 0.25 * t) - 1)));
-    }
-
-
-        /*
-
-        static void Main(string[] args)
+        public static float maxDiff(List<PointF> f1, List<PointF> f2)
         {
-            float[] t = { 0, 40 };
-            PointF leftmost = new PointF(0, 1);
-
-            List<PointFF> f1 = analytical(t, 0.1);
-            Console.Write("X = [");
-            foreach (var y in f1.Select(f => f.X))
+            List<PointF> deltas = diff(f1, f2);
+            float delta = 0;
+            foreach (PointF p in deltas)
             {
-                Console.Write(y + "\t");
+                if (Math.Abs(p.Y) >= Math.Abs(delta))
+                    delta = Math.Abs(p.Y);
             }
-            Console.WriteLine("];");
-            Console.Write("Y1 = [");
-            foreach (var y in f1.Select(f => f.Y))
-            {
-                Console.Write(y + "\t");
-            }
-            Console.WriteLine("];");
-            List<PointFF> f2 = analytical(t, 0.01);
-            Console.Write("Y2 = [");
-            foreach (var y in f2.Select(f => f.Y))
-            {
-                Console.Write(y + "\t");
-            }
-            Console.WriteLine("];");
-            List<PointFF> e1 = euler(leftmost, t, 0.1);
-            Console.Write("E1 = [");
-            foreach (var y in e1.Select(f => f.Y))
-            {
-                Console.Write(y + "\t");
-            }
-            Console.WriteLine("];");
-            List<PointFF> e2 = euler(leftmost, t, 0.01);
-            Console.Write("E2 = [");
-            foreach (var y in e2.Select(f => f.Y))
-            {
-                Console.Write(y + "\t");
-            }
-            Console.WriteLine("];");
-
-            float firstDiff = maxDiff(f1, e1);
-
-            float secondDiff = maxDiff(f2, e2);
+            return delta;
         }
 
 
-        public static List<PointFF> analytical(float[] t, float h)
+        public static List<PointF> euler(PointF leftmost, float[] t, float h)
         {
-            List<PointFF> ty = new List<PointFF>();
-            float x = t[0] + h;
-            while (x < t[1])
-            {
-                ty.Add(new PointFF((float)x, (float)analyticalFunction(x)));
-                x += h;
-            }
-
-            return ty;
-        }
-
-        public static List<PointFF> euler(PointF leftmost, float[] t, float h)
-        {
-            List<PointFF> ty = new List<PointFF>();
-            float x = t[0] + h;
+            List<PointF> ty = new List<PointF>();
+            float x = t[0];
             float y = leftmost.Y;
             float nextY;
-            while (x < t[1])
+            while (x <= t[1])
             {
                 nextY = y + h * function(y);
-                ty.Add(new PointFF((float)x, (float)nextY));
+                ty.Add(new PointF((float)x, (float)nextY));
                 x += h;
                 y = nextY;
             }
@@ -211,32 +149,24 @@ namespace Laboratornaja4
             return ty;
         }
 
-        public static List<PointFF> diff(List<PointFF> f1, List<PointFF> f2)
+        static void print(string variable, List<PointF> points)
         {
-            List<PointFF> diff = new List<PointFF>();
-            float delta;
-            for (int i = 0; i < f1.Count(); i++)
+            Console.Write(variable.ToUpper() + " = [");
+            foreach (var y in points.Select(f => f.Y))
             {
-                delta = f1[i].Y - f2[i].Y;
-                diff.Add(new PointFF((float)f1[i].X, (float)delta));
+                Console.Write(y.ToString("0.0000000000") + " ");
             }
-            return diff;
+            Console.WriteLine("];");
         }
 
-        public static float maxDiff(List<PointFF> f1, List<PointFF> f2)
+        static void printDiff(string variable, List<PointF> p1, List<PointF> p2)
         {
-            List<PointFF> deltas = diff(f1, f2);
-            float delta = 0;
-            for (int i = 0; i < deltas.Count; i++)
+            var err = new List<PointF>(p1.Count);
+            for (int i = 0; i < p1.Count; i++)
             {
-                PointFF p = deltas[i];
-                if (Math.Abs(p.Y) >= Math.Abs(delta))
-                    delta = Math.Abs(p.Y);
+                err.Add(new PointF(p1[i].X, Math.Abs(p1[i].Y - p2[i].Y)));
             }
-            return delta;
+            print(variable, err);
         }
-
-         */
-
     }
 }
